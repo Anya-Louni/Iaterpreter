@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IATERPRETER - AI-Powered Flight Attendant Website
+
+A stunning, modern website for flight attendant interpretation services featuring a 3D interactive globe and AI-powered document analysis.
+
+## Features
+
+- **3D Interactive Globe**: Beautiful Three.js globe with floating language indicators
+- **AI Document Analysis**: Upload documents for instant keyword extraction
+- **Modern UI/UX**: Glassmorphism, gradients, and smooth animations
+- **Responsive Design**: Optimized for all devices
+- **Premium Styling**: Gold accents and luxury feel
+
+## Tech Stack
+
+- **Next.js 16** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Three.js** - 3D graphics
+- **React Three Fiber** - React renderer for Three.js
+- **Framer Motion** - Animations
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## AI Integration
 
-## Learn More
+The website includes a document analysis feature. To integrate a real AI API:
 
-To learn more about Next.js, take a look at the following resources:
+### Option 1: OpenAI API (Recommended)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install openai
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Add to `.env.local`:
+```
+OPENAI_API_KEY=your_api_key_here
+```
 
-## Deploy on Vercel
+### Option 2: Azure AI Document Intelligence
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm install @azure/ai-form-recognizer
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Add to `.env.local`:
+```
+AZURE_DOCUMENT_ENDPOINT=your_endpoint
+AZURE_DOCUMENT_KEY=your_key
+```
+
+### Option 3: Google Cloud Vision
+
+```bash
+npm install @google-cloud/vision
+```
+
+### Option 4: AWS Textract
+
+```bash
+npm install @aws-sdk/client-textract
+```
+
+## Customization
+
+- Colors: Edit gold color values in components (`#FFD700`)
+- 3D Globe: Modify `components/Globe.tsx`
+- Animations: Adjust Framer Motion settings
+- Content: Update text in component files
+
+## Deployment
+
+Deploy to Vercel:
+
+```bash
+npm run build
+vercel deploy
+```
+
+## License
+
+Private - All rights reserved
