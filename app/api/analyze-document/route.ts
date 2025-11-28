@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-
 export async function POST(request: NextRequest) {
   try {
     console.log('API route called');
     console.log('API Key present:', !!process.env.GEMINI_API_KEY);
+    
+    // Check if API key is configured
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('GEMINI_API_KEY not found in environment variables');
+      return NextResponse.json(
+        { error: 'AI service not configured. Please contact support.' },
+        { status: 500 }
+      );
+    }
     
     const formData = await request.formData();
     const file = formData.get('file') as File;
@@ -36,6 +43,10 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
     const base64Data = buffer.toString('base64');
 
+    // Initialize Gemini with API key
+    const apiKey = process.env.GEMINI_API_KEY;
+    const genAI = new GoogleGenerativeAI(apiKey);
+    
     // Use Gemini 2.5 Flash - fast and intelligent model for document analysis
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
