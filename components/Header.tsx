@@ -42,10 +42,9 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0, duration: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="relative text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)] group"
+              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)]"
             >
               Services
-              <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-[#C9A55A] group-hover:w-full transition-all duration-300"></span>
             </motion.a>
             <motion.a
               href="#ai-analysis"
@@ -53,10 +52,9 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="relative text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)] group"
+              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)]"
             >
               AI Analysis
-              <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-[#C9A55A] group-hover:w-full transition-all duration-300"></span>
             </motion.a>
             <motion.a
               href="#contact"
@@ -64,10 +62,9 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="relative text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)] group"
+              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)]"
             >
               Contact
-              <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-[#C9A55A] group-hover:w-full transition-all duration-300"></span>
             </motion.a>
           </nav>
 
