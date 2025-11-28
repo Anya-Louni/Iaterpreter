@@ -20,20 +20,33 @@ export default function AIDocumentAnalyzer() {
     if (!file) return;
 
     setAnalyzing(true);
+    setResults(null); // Clear previous results
     
     const formData = new FormData();
     formData.append('file', file);
 
     try {
+      console.log('Sending file to API:', file.name, file.type);
+      
       const response = await fetch('/api/analyze-document', {
         method: 'POST',
         body: formData,
       });
 
+      console.log('Response status:', response.status);
+      
       const data = await response.json();
+      console.log('Response data:', data);
+      
+      if (data.error) {
+        alert('Error: ' + data.error);
+        return;
+      }
+      
       setResults(data);
     } catch (error) {
       console.error('Error analyzing document:', error);
+      alert('Failed to analyze document. Check console for details.');
     } finally {
       setAnalyzing(false);
     }
@@ -93,7 +106,7 @@ export default function AIDocumentAnalyzer() {
             {/* Animated background */}
             <div className="absolute inset-0 bg-linear-to-br from-[#C9A55A]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
-            <div className="text-center relative z-10" style={{ padding: '60px 20px' }}>
+            <div className="text-center relative z-10 flex items-center justify-center" style={{ padding: '100px 60px', minHeight: '280px' }}>
               {!file ? (
                 <>
                   <input
@@ -103,18 +116,18 @@ export default function AIDocumentAnalyzer() {
                     className="hidden"
                     id="fileInput"
                   />
-                  <label htmlFor="fileInput" className="cursor-pointer block">
-                    <div className="text-[#C9A55A]/50 group-hover:text-[#C9A55A] transition-colors duration-500">
-                      <UploadCloud size={100} className="mx-auto mb-8 sm:mb-12 md:mb-20 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48" strokeWidth={0.5} />
+                  <label htmlFor="fileInput" className="cursor-pointer block w-full">
+                    <div className="text-[#C9A55A]/50 group-hover:text-[#C9A55A] transition-colors duration-500 flex justify-center">
+                      <UploadCloud size={48} className="mb-6" strokeWidth={0.5} />
                     </div>
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="text-gray-400 text-base sm:text-xl md:text-2xl lg:text-3xl tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-6 sm:mb-8 md:mb-12 font-light"
+                      className="text-gray-400 text-base tracking-[0.2em] uppercase mb-4 font-light text-center"
                     >
                       Drop file or click to upload
                     </motion.div>
-                    <div className="text-gray-600 text-sm sm:text-base md:text-lg lg:text-2xl tracking-wider">
+                    <div className="text-gray-600 text-sm tracking-wider text-center">
                       PDF • JPG • PNG
                     </div>
                   </label>
@@ -123,9 +136,9 @@ export default function AIDocumentAnalyzer() {
                   <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="space-y-20"
+                  className="space-y-12 w-full flex flex-col items-center"
                 >
-                  <div className="flex items-center justify-center space-x-5">
+                  <div className="flex items-center justify-center space-x-5 w-full">
                     <File size={28} className="text-[#C9A55A]" />
                     <motion.span
                       initial={{ x: -20, opacity: 0 }}
@@ -181,19 +194,27 @@ export default function AIDocumentAnalyzer() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mt-24 border border-[#C9A55A]/20 bg-black/40 backdrop-blur-sm p-20"
+              className="mt-24 border border-[#C9A55A]/20 bg-black/40 backdrop-blur-sm"
+              style={{ padding: '12px 12px' }}
             >
-              <h3 className="text-4xl font-light tracking-wider text-white mb-12">RESULTS</h3>
+              <h3 className="text-4xl font-light tracking-wider text-white mb-20">ANALYSIS RESULTS</h3>
               
-              <div className="space-y-12">
-                {results.keywords && (
+              <div className="space-y-32">
+                {results.summary && (
                   <div>
-                    <h4 className="text-lg tracking-widest text-gray-500 uppercase mb-5">Keywords</h4>
+                    <h4 className="text-lg tracking-widest text-[#C9A55A] uppercase mb-8">Summary</h4>
+                    <p className="text-gray-300 text-xl leading-relaxed">{results.summary}</p>
+                  </div>
+                )}
+
+                {results.keywords && results.keywords.length > 0 && (
+                  <div>
+                    <h4 className="text-lg tracking-widest text-[#C9A55A] uppercase mb-8">Key Words</h4>
                     <div className="flex flex-wrap gap-5">
                       {results.keywords.map((keyword: string, idx: number) => (
                         <span
                           key={idx}
-                          className="px-6 py-3 border border-[#C9A55A]/30 text-[#C9A55A] text-lg tracking-wide bg-black/20"
+                          className="px-6 py-3 border border-[#C9A55A]/30 text-[#C9A55A] text-lg tracking-wide bg-black/20 hover:bg-[#C9A55A]/10 transition-colors"
                         >
                           {keyword}
                         </span>
@@ -202,22 +223,17 @@ export default function AIDocumentAnalyzer() {
                   </div>
                 )}
 
-                <div className="grid md:grid-cols-2 gap-12">
+                {results.keyInsights && results.keyInsights.length > 0 && (
                   <div>
-                    <h4 className="text-lg tracking-widest text-gray-500 uppercase mb-3">Document Type</h4>
-                    <p className="text-white text-xl">{results.type}</p>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg tracking-widest text-gray-500 uppercase mb-3">Language</h4>
-                    <p className="text-white text-xl">{results.language}</p>
-                  </div>
-                </div>
-
-                {results.summary && (
-                  <div>
-                    <h4 className="text-lg tracking-widest text-gray-500 uppercase mb-5">Summary</h4>
-                    <p className="text-gray-400 text-lg leading-relaxed">{results.summary}</p>
+                    <h4 className="text-lg tracking-widest text-[#C9A55A] uppercase mb-8">Key Insights</h4>
+                    <ul className="space-y-5">
+                      {results.keyInsights.map((insight: string, idx: number) => (
+                        <li key={idx} className="text-gray-300 text-lg flex items-start leading-relaxed">
+                          <span className="text-[#C9A55A] mr-3">•</span>
+                          {insight}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>

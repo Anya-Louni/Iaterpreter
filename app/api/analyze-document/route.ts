@@ -1,84 +1,97 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('API route called');
+    console.log('API Key present:', !!process.env.GEMINI_API_KEY);
+    
     const formData = await request.formData();
     const file = formData.get('file') as File;
 
     if (!file) {
+      console.log('No file provided');
       return NextResponse.json(
         { error: 'No file provided' },
         { status: 400 }
       );
     }
 
-    // Here you would integrate with an AI API like:
-    // - OpenAI API (GPT-4 Vision for document understanding)
-    // - Azure AI Document Intelligence
-    // - Google Cloud Vision API
-    // - AWS Textract
-    
-    // Example using OpenAI API (you'd need to install openai package and add API key):
-    /*
-    import OpenAI from 'openai';
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
+    console.log('File received:', file.name, file.type, file.size);
 
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const base64 = buffer.toString('base64');
+    // Check file type
+    const fileType = file.type;
+    if (!fileType.includes('pdf') && !fileType.includes('image')) {
+      console.log('Invalid file type:', fileType);
+      return NextResponse.json(
+        { error: 'Only PDF and image files are supported' },
+        { status: 400 }
+      );
+    }
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: "Analyze this document and extract: 1) Key keywords, 2) Document type, 3) Language, 4) Brief summary. Return as JSON."
-            },
-            {
-              type: "image_url",
-              image_url: {
-                url: `data:${file.type};base64,${base64}`
-              }
-            }
-          ]
-        }
-      ],
-      max_tokens: 500
-    });
+    // Convert file to base64
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const base64Data = buffer.toString('base64');
 
-    const analysis = JSON.parse(response.choices[0].message.content || '{}');
-    */
+    // Use Gemini 2.5 Flash - fast and intelligent model for document analysis
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    // For demo purposes, returning mock data
-    // Replace this with actual AI API integration
-    const mockAnalysis = {
-      keywords: [
-        'Passport',
-        'International',
-        'Travel',
-        'Visa',
-        'Immigration',
-        'Identity',
-        'Document',
-        'Official'
-      ],
-      type: 'Travel Document / Passport',
-      language: 'English',
-      summary: 'This appears to be an official travel document containing personal identification information, visa stamps, and travel authorization details for international travel purposes.',
-      confidence: 0.95
+    const prompt = `Analyze this document and provide:
+1. A concise summary (2-3 sentences maximum)
+2. 5-7 key keywords or main topics
+3. 3-5 key insights or important points
+4. Overall sentiment (Positive/Neutral/Negative)
+
+Format your response as JSON with this exact structure:
+{
+  "summary": "brief summary here",
+  "keywords": ["keyword1", "keyword2"],
+  "keyInsights": ["insight1", "insight2"],
+  "sentiment": "Positive"
+}`;
+
+    const imagePart = {
+      inlineData: {
+        data: base64Data,
+        mimeType: fileType,
+      },
     };
 
-    return NextResponse.json(mockAnalysis);
+    console.log('Calling Gemini API...');
+    const result = await model.generateContent([prompt, imagePart]);
+    const response = result.response;
+    const text = response.text();
+    
+    console.log('Gemini response:', text);
+
+    // Parse JSON response from Gemini
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.log('No JSON found in response');
+      throw new Error('Invalid response format from AI');
+    }
+
+    const analysis = JSON.parse(jsonMatch[0]);
+    console.log('Parsed analysis:', analysis);
+
+    const responseData = {
+      summary: analysis.summary || 'No summary available',
+      keywords: analysis.keywords || [],
+      keyInsights: analysis.keyInsights || [],
+      sentiment: analysis.sentiment || 'Neutral',
+    };
+    
+    console.log('Sending response:', responseData);
+
+    return NextResponse.json(responseData);
 
   } catch (error) {
     console.error('Error analyzing document:', error);
     return NextResponse.json(
-      { error: 'Failed to analyze document' },
+      { error: error instanceof Error ? error.message : 'Failed to analyze document' },
       { status: 500 }
     );
   }

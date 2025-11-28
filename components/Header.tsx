@@ -69,12 +69,14 @@ export default function Header() {
           </nav>
 
           {/* Desktop CTA Button */}
-          <a
+          <motion.a
             href="#contact"
-            className="hidden md:flex group relative px-16 py-8 bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.6)] hover:brightness-110 text-lg font-bold tracking-[0.2em] min-w-[200px] items-center justify-center"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="hidden md:flex group relative px-16 py-8 bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 text-lg font-bold tracking-[0.2em] min-w-[200px] items-center justify-center"
           >
             GET STARTED
-          </a>
+          </motion.a>
 
           {/* Mobile Menu Button - Absolute Right */}
           <motion.button
@@ -132,7 +134,7 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] font-bold tracking-[0.2em] transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.6)] hover:brightness-110 flex items-center justify-center"
+            className="w-full bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] font-bold tracking-[0.2em] transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 flex items-center justify-center"
             style={{ fontSize: '16px', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '40px', paddingRight: '40px' }}
           >
             GET STARTED
