@@ -19,10 +19,11 @@ export default function Header() {
       >
         <div className="flex items-center justify-between h-28 w-full max-w-7xl">
           {/* Logo */}
-          <motion.div
+          <motion.a
+            href="#hero"
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.3 }}
-            className="flex items-center gap-4"
+            className="flex items-center gap-4 cursor-pointer"
           >
             <motion.div
               animate={{ rotate: [0, 360] }}
@@ -32,7 +33,7 @@ export default function Header() {
             <h1 className="text-3xl font-extralight tracking-[0.15em] bg-linear-to-r from-[#D4AF37] to-[#C9A55A] bg-clip-text text-transparent">
               IATERPRETER
             </h1>
-          </motion.div>
+          </motion.a>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-16">
@@ -42,7 +43,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0, duration: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)]"
+              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_20px_rgba(201,165,90,0.8)]"
             >
               Services
             </motion.a>
@@ -52,7 +53,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)]"
+              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_20px_rgba(201,165,90,0.8)]"
             >
               AI Analysis
             </motion.a>
@@ -62,7 +63,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_8px_rgba(201,165,90,0.6)]"
+              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_20px_rgba(201,165,90,0.8)]"
             >
               Contact
             </motion.a>
@@ -70,7 +71,7 @@ export default function Header() {
 
           {/* Desktop CTA Button */}
           <motion.a
-            href="#contact"
+            href="#ai-analysis"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="hidden md:flex group relative px-16 py-8 bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 text-lg font-bold tracking-[0.2em] min-w-[200px] items-center justify-center"
@@ -130,7 +131,7 @@ export default function Header() {
             </motion.a>
           </nav>
           <motion.a
-            href="#contact"
+            href="#ai-analysis"
             onClick={() => setIsOpen(false)}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

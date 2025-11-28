@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
       {/* Radial gradient overlay for depth */}
       <div className="absolute inset-0 z-1 radial-overlay"></div>
 

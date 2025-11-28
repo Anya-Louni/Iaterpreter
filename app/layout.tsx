@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "IATERPRETER - AI-Powered Document Analyzer",
-  description: "Professional translation and interpretation services with AI-powered document analysis. Upload PDFs and images for instant keyword extraction, summaries, and key insights powered by Google Gemini AI.",
+  description: "Professional translation and interpretation services with AI-powered document analysis. Upload PDFs and images for instant keyword extraction, summaries, and key insights powered by AI.",
 };
 
 export default function RootLayout({
