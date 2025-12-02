@@ -1,10 +1,9 @@
 # IATERPRETER - AI-Powered Document Analyzer
 
-A stunning, modern website for translation and interpretation services featuring a 3D interactive globe and AI-powered document analysis with Gemini AI.
+A website for translation and interpretation services featuring an AI-powered document analysis with Gemini AI.
 
 ## Features
 
-- **3D Interactive Globe**: Beautiful Three.js globe with rotating language indicators
 - **AI Document Analysis**: Upload PDF and image files for instant keyword extraction, summarization, and key insights powered by Google Gemini AI
 - **Modern UI/UX**: Elegant gold accents, smooth animations, and premium design
 - **Fully Responsive**: Optimized for all devices with mobile-first approach
@@ -79,23 +78,6 @@ vercel deploy
 ### Environment Variables Required
 
 - `GEMINI_API_KEY` - Your Google Gemini API key
-
-## Project Structure
-
-```
-├── app/
-│   ├── api/analyze-document/  # Gemini AI integration
-│   ├── layout.tsx             # Root layout
-│   └── page.tsx               # Home page
-├── components/
-│   ├── Header.tsx             # Navigation with hover effects
-│   ├── Hero.tsx               # Landing section
-│   ├── Globe.tsx              # 3D rotating globe
-│   ├── Services.tsx           # Services section
-│   ├── AIDocumentAnalyzer.tsx # AI document upload and analysis
-│   └── Contact.tsx            # Contact form
-└── public/                    # Static assets
-```
 
 ## License
 
