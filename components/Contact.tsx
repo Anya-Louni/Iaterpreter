@@ -63,7 +63,7 @@ export default function Contact() {
             
             <form onSubmit={handleSubmit} className="space-y-8">
               <div>
-                <label htmlFor="name" className="block text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] text-[#C9A55A] mb-3 sm:mb-4">
+                <label htmlFor="name" className="block text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] text-[#C9A55A] mb-3 sm:mb-4 pt-4">
                   FULL NAME *
                 </label>
                 <input
@@ -72,13 +72,13 @@ export default function Contact() {
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border border-[#C9A55A]/20 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors"
+                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border-2 border-[#C9A55A]/50 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors rounded-none"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] text-[#C9A55A] mb-3 sm:mb-4">
+                <label htmlFor="email" className="block text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] text-[#C9A55A] mb-3 sm:mb-4 pt-4">
                   EMAIL ADDRESS *
                 </label>
                 <input
@@ -87,13 +87,13 @@ export default function Contact() {
                   id="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border border-[#C9A55A]/20 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors"
+                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border-2 border-[#C9A55A]/50 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors rounded-none"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] text-[#C9A55A] mb-3 sm:mb-4">
+                <label htmlFor="subject" className="block text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] text-[#C9A55A] mb-3 sm:mb-4 pt-4">
                   SUBJECT *
                 </label>
                 <input
@@ -102,7 +102,7 @@ export default function Contact() {
                   id="subject"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border border-[#C9A55A]/20 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors"
+                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border-2 border-[#C9A55A]/50 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors rounded-none"
                   required
                 />
               </div>
@@ -117,7 +117,7 @@ export default function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={8}
-                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border border-[#C9A55A]/20 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors resize-none"
+                  className="w-full px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 bg-black/60 border-2 border-[#C9A55A]/50 text-white text-sm sm:text-base md:text-lg focus:outline-none focus:border-[#C9A55A] transition-colors resize-none rounded-none"
                   required
                 />
               </div>
@@ -126,7 +126,7 @@ export default function Contact() {
                 style={{ marginBottom: '16px' }}
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative w-full px-12 py-5 sm:px-20 sm:py-7 md:px-24 md:py-8 bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] overflow-hidden transition-all duration-300 hover:shadow-[0_0_10px_rgba(201,165,90,0.6)] hover:brightness-110 text-base sm:text-lg md:text-xl font-bold tracking-[0.15em] sm:tracking-[0.2em] min-w-[200px] sm:min-w-[240px] md:min-w-[280px] flex items-center justify-center mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative w-full px-12 py-5 sm:px-20 sm:py-7 md:px-24 md:py-8 bg-[#C9A55A] text-black overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 text-base sm:text-lg md:text-xl font-bold tracking-[0.15em] sm:tracking-[0.2em] min-w-[200px] sm:min-w-[240px] md:min-w-[280px] flex items-center justify-center mt-8 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
               </button>

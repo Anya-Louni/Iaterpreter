@@ -1,11 +1,14 @@
-# IATERPRETER - AI-Powered Document Analyzer
+# IATERPRETER - AI-Powered Translation Platform
 
-A stunning, modern website for translation and interpretation services featuring a 3D interactive globe and AI-powered document analysis with Gemini AI.
+A stunning, modern website for translation and interpretation services featuring a 3D interactive globe and multiple AI-powered translation tools with Google Gemini AI.
 
 ## Features
 
 - **3D Interactive Globe**: Beautiful Three.js globe with rotating language indicators
-- **AI Document Analysis**: Upload PDF and image files for instant keyword extraction, summarization, and key insights powered by Google Gemini AI
+- **Voice Translator**: Record French audio → transcribe → translate to English → speak translation (with Web Speech API)
+- **Image Translator**: Capture/upload images → OCR text extraction → instant translation
+- **Expert Prompt Generator**: Generate field-specific expert translation prompts (Legal, Medical, Technical, Literary, etc.)
+- **AI Document Analysis**: Upload PDF and image files for instant keyword extraction, summarization, and key insights
 - **Modern UI/UX**: Elegant gold accents, smooth animations, and premium design
 - **Fully Responsive**: Optimized for all devices with mobile-first approach
 - **Premium Styling**: Sophisticated gold color scheme with luxury feel
@@ -35,10 +38,29 @@ npm run dev
 
 ## AI Integration
 
-The website uses **Google Gemini AI** for document analysis with the following features:
+The website uses **Google Gemini AI** for multiple translation and analysis features:
 
+### Voice Translation
+- **Audio Transcription**: Gemini transcribes French audio to text
+- **Translation**: Automatic French to English translation
+- **Speech Synthesis**: Web Speech API speaks the English translation
+- **Real-time Processing**: Fast transcription and translation
+
+### Image Translation
+- **OCR Text Extraction**: Gemini Vision API extracts text from images
+- **Language Detection**: Automatically detects source language
+- **Translation**: Translates extracted text to English
+- **Camera Support**: Capture photos directly or upload images
+
+### Expert Prompt Generation
+- **Field-Specific Prompts**: Generate expert translation prompts for 8+ fields
+- **Customized Instructions**: Tailored prompts for Legal, Medical, Technical, Literary, Business, Scientific, Marketing, and Website localization
+- **AI-Optimized**: Gemini optimizes prompts for maximum translation quality
+
+### Document Analysis
 - **PDF Analysis**: Extract keywords, summary, and key insights from PDF documents
 - **Image Analysis**: Analyze images containing text or documents
+- **Comprehensive Results**: Organized output with summaries, keywords, and insights
 - **Real-time Processing**: Fast analysis using Gemini 2.5 Flash model
 
 ### Setup Gemini API

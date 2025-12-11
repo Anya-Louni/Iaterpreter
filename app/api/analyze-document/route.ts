@@ -43,25 +43,28 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
     const base64Data = buffer.toString('base64');
 
-    // Initialize Gemini with API key
+    // Initialize Gemini
     const apiKey = process.env.GEMINI_API_KEY;
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Use Gemini 2.5 Flash - fast and intelligent model for document analysis
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemini-2.5-flash',
+      generationConfig: {
+        temperature: 0.4,
+        maxOutputTokens: 1000,
+      }
+    });
 
     const prompt = `Analyze this document and provide:
 1. A concise summary (2-3 sentences maximum)
 2. 5-7 key keywords or main topics
 3. 3-5 key insights or important points
-4. Overall sentiment (Positive/Neutral/Negative)
 
 Format your response as JSON with this exact structure:
 {
   "summary": "brief summary here",
   "keywords": ["keyword1", "keyword2"],
-  "keyInsights": ["insight1", "insight2"],
-  "sentiment": "Positive"
+  "keyInsights": ["insight1", "insight2"]
 }`;
 
     const imagePart = {
@@ -74,12 +77,12 @@ Format your response as JSON with this exact structure:
     console.log('Calling Gemini API...');
     const result = await model.generateContent([prompt, imagePart]);
     const response = result.response;
-    const text = response.text();
+    const responseText = response.text();
     
-    console.log('Gemini response:', text);
+    console.log('Gemini response:', responseText);
 
-    // Parse JSON response from Gemini
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    // Parse JSON response
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
       console.log('No JSON found in response');
       throw new Error('Invalid response format from AI');
@@ -92,7 +95,6 @@ Format your response as JSON with this exact structure:
       summary: analysis.summary || 'No summary available',
       keywords: analysis.keywords || [],
       keyInsights: analysis.keyInsights || [],
-      sentiment: analysis.sentiment || 'Neutral',
     };
     
     console.log('Sending response:', responseData);

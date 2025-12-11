@@ -72,3 +72,14 @@ body {
 .gold-glow {
   text-shadow: 0 0 40px rgba(201, 165, 90, 0.2);
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -15,7 +15,7 @@ export default function Header() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto px-6 w-full flex justify-center"
+        className="mx-auto px-12 w-full flex justify-center"
       >
         <div className="flex items-center justify-between h-28 w-full max-w-7xl">
           {/* Logo */}
@@ -39,44 +39,78 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-16">
             <motion.a
               href="#services"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0, duration: 0.6 }}
-              whileHover={{ scale: 1.05 }}
-              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_20px_rgba(201,165,90,0.8)]"
+              initial={{ opacity: 0, y: -10, filter: 'drop-shadow(0 0 0px transparent)' }}
+              animate={{ opacity: 1, y: 0, filter: 'drop-shadow(0 0 0px transparent)' }}
+              transition={{ delay: 0, duration: 0.3 }}
+              whileHover={{ 
+                filter: 'drop-shadow(0 0 15px rgba(201, 165, 90, 1)) drop-shadow(0 0 30px rgba(201, 165, 90, 1)) drop-shadow(0 0 45px rgba(201, 165, 90, 0.8))'
+              }}
+              className="text-sm text-gray-300 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] cursor-pointer"
             >
               Services
             </motion.a>
             <motion.a
+              href="#voice-translator"
+              initial={{ opacity: 0, y: -10, filter: 'drop-shadow(0 0 0px transparent)' }}
+              animate={{ opacity: 1, y: 0, filter: 'drop-shadow(0 0 0px transparent)' }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+              whileHover={{ 
+                filter: 'drop-shadow(0 0 15px rgba(201, 165, 90, 1)) drop-shadow(0 0 30px rgba(201, 165, 90, 1)) drop-shadow(0 0 45px rgba(201, 165, 90, 0.8))'
+              }}
+              className="text-sm text-gray-300 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] cursor-pointer"
+            >
+              Voice
+            </motion.a>
+            <motion.a
+              href="#image-translator"
+              initial={{ opacity: 0, y: -10, filter: 'drop-shadow(0 0 0px transparent)' }}
+              animate={{ opacity: 1, y: 0, filter: 'drop-shadow(0 0 0px transparent)' }}
+              transition={{ delay: 0.15, duration: 0.3 }}
+              whileHover={{ 
+                filter: 'drop-shadow(0 0 15px rgba(201, 165, 90, 1)) drop-shadow(0 0 30px rgba(201, 165, 90, 1)) drop-shadow(0 0 45px rgba(201, 165, 90, 0.8))'
+              }}
+              className="text-sm text-gray-300 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] cursor-pointer"
+            >
+              Image
+            </motion.a>
+            <motion.a
               href="#ai-analysis"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              whileHover={{ scale: 1.05 }}
-              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_20px_rgba(201,165,90,0.8)]"
+              initial={{ opacity: 0, y: -10, filter: 'drop-shadow(0 0 0px transparent)' }}
+              animate={{ opacity: 1, y: 0, filter: 'drop-shadow(0 0 0px transparent)' }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              whileHover={{ 
+                filter: 'drop-shadow(0 0 15px rgba(201, 165, 90, 1)) drop-shadow(0 0 30px rgba(201, 165, 90, 1)) drop-shadow(0 0 45px rgba(201, 165, 90, 0.8))'
+              }}
+              className="text-sm text-gray-300 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] cursor-pointer"
             >
               AI Analysis
             </motion.a>
             <motion.a
               href="#contact"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              whileHover={{ scale: 1.05 }}
-              className="text-sm text-gray-400 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] hover:drop-shadow-[0_0_20px_rgba(201,165,90,0.8)]"
+              initial={{ opacity: 0, y: -10, filter: 'drop-shadow(0 0 0px transparent)' }}
+              animate={{ opacity: 1, y: 0, filter: 'drop-shadow(0 0 0px transparent)' }}
+              transition={{ delay: 0.25, duration: 0.3 }}
+              whileHover={{ 
+                filter: 'drop-shadow(0 0 15px rgba(201, 165, 90, 1)) drop-shadow(0 0 30px rgba(201, 165, 90, 1)) drop-shadow(0 0 45px rgba(201, 165, 90, 0.8))'
+              }}
+              className="text-sm text-gray-300 tracking-[0.25em] uppercase font-light transition-all duration-300 hover:text-[#C9A55A] cursor-pointer"
             >
               Contact
             </motion.a>
           </nav>
 
-          {/* Desktop CTA Button */}
+          {/* Get In Touch Button - Empty Style */}
           <motion.a
-            href="#ai-analysis"
-            whileHover={{ scale: 1.02 }}
+            href="#contact"
+            whileHover={{ 
+              boxShadow: '0 0 30px rgba(201, 165, 90, 0.9), 0 0 60px rgba(201, 165, 90, 0.5)'
+            }}
             whileTap={{ scale: 0.98 }}
-            className="hidden md:flex group relative px-16 py-8 bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 text-lg font-bold tracking-[0.2em] min-w-[200px] items-center justify-center"
+            transition={{ duration: 0.3 }}
+            style={{ paddingLeft: '50px', paddingRight: '50px' }}
+            className="hidden md:inline-block py-5 text-lg font-bold tracking-[0.2em] uppercase border-2 border-[#C9A55A] text-[#C9A55A] bg-transparent cursor-pointer"
           >
-            GET STARTED
+            GET IN TOUCH
           </motion.a>
 
           {/* Mobile Menu Button - Absolute Right */}
@@ -112,6 +146,24 @@ export default function Header() {
               Services
             </motion.a>
             <motion.a
+              href="#voice-translator"
+              onClick={() => setIsOpen(false)}
+              whileHover={{ x: 8 }}
+              className="text-gray-400 tracking-[0.25em] uppercase font-light transition-colors duration-300 hover:text-[#C9A55A] border-b border-[#C9A55A]/10"
+              style={{ fontSize: '18px', paddingTop: '16px', paddingBottom: '16px' }}
+            >
+              Voice
+            </motion.a>
+            <motion.a
+              href="#image-translator"
+              onClick={() => setIsOpen(false)}
+              whileHover={{ x: 8 }}
+              className="text-gray-400 tracking-[0.25em] uppercase font-light transition-colors duration-300 hover:text-[#C9A55A] border-b border-[#C9A55A]/10"
+              style={{ fontSize: '18px', paddingTop: '16px', paddingBottom: '16px' }}
+            >
+              Image
+            </motion.a>
+            <motion.a
               href="#ai-analysis"
               onClick={() => setIsOpen(false)}
               whileHover={{ x: 8 }}
@@ -130,16 +182,6 @@ export default function Header() {
               Contact
             </motion.a>
           </nav>
-          <motion.a
-            href="#ai-analysis"
-            onClick={() => setIsOpen(false)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full bg-transparent border-2 border-[#C9A55A] text-[#C9A55A] font-bold tracking-[0.2em] transition-all duration-300 hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 flex items-center justify-center"
-            style={{ fontSize: '16px', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '40px', paddingRight: '40px' }}
-          >
-            GET STARTED
-          </motion.a>
         </div>
       </motion.div>
     </header>

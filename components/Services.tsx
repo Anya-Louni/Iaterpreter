@@ -44,7 +44,8 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center flex flex-col items-center"
+          className="text-center flex flex-col items-center mb-24"
+          style={{ marginBottom: '24px' }}
         >
           <motion.div
             initial={{ opacity: 0 }}
@@ -52,7 +53,7 @@ export default function Services() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.15em] sm:tracking-[0.2em] mb-20 text-white" style={{ marginBottom: '8px' }}>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.15em] sm:tracking-[0.2em] mb-8 text-white" style={{ marginBottom: '12px' }}>
               SERVICES
             </h2>
           </motion.div>
@@ -61,15 +62,16 @@ export default function Services() {
             whileInView={{ width: 200, opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}
-            className="h-px bg-linear-to-r from-transparent via-[#C9A55A] to-transparent mb-24"
+            className="h-px bg-gradient-to-r from-transparent via-[#C9A55A] to-transparent mb-10"
+            style={{ marginBottom: '12px' }}
           />
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
             viewport={{ once: true }}
-            className="text-gray-500 text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase"
-            style={{ marginTop: '8px', marginBottom: '16px' }}
+            className="text-gray-500 text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-16"
+            style={{ marginBottom: '0px' }}
           >
             Excellence in Every Interaction
           </motion.p>
@@ -79,23 +81,17 @@ export default function Services() {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.7, 
-                  delay: index * 0.15,
-                  ease: [0.22, 1, 0.36, 1]
+                className="bg-[#0a0a0a] p-12 sm:p-20 md:p-28 lg:p-32 group relative overflow-hidden border border-[#C9A55A]/10"
+                style={{
+                  opacity: 0,
+                  transform: 'translateY(40px)',
+                  animation: `fadeInUp 0.7s ease-out ${index * 0.15}s forwards`
                 }}
-                viewport={{ once: true, margin: "-50px" }}
-                className="bg-[#0a0a0a] p-12 sm:p-20 md:p-28 lg:p-32 group cursor-pointer relative overflow-hidden border border-[#C9A55A]/10"
               >
-                {/* Hover gradient effect */}
-                <motion.div
-                  className="absolute inset-0 bg-linear-to-br from-[#C9A55A]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  initial={false}
-                />
+                {/* Permanent gradient from right */}
+                <div className="absolute inset-0 bg-gradient-to-l from-[#C9A55A]/40 via-[#C9A55A]/10 to-transparent pointer-events-none" />
 
                 <div className="relative z-10">
                     <div className="flex items-start justify-between mb-12 sm:mb-20 md:mb-28">
@@ -104,7 +100,7 @@ export default function Services() {
                     >
                       <Icon size={36} className="sm:w-12 sm:h-12" strokeWidth={0.5} />
                     </motion.div>
-                    <div className="text-[#C9A55A]/20 text-4xl sm:text-5xl md:text-6xl font-extralight group-hover:text-[#C9A55A]/40 transition-colors duration-500">
+                    <div className="text-[#C9A55A]/30 text-4xl sm:text-5xl md:text-6xl font-extralight group-hover:text-[#C9A55A]/50 transition-colors duration-500">
                       {service.number}
                     </div>
                   </div>
@@ -132,7 +128,7 @@ export default function Services() {
                     </motion.span>
                   </motion.div>
                 </div>
-              </motion.div>
+              </div>
             )
           })}
         </div>

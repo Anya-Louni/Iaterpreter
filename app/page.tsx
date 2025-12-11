@@ -5,6 +5,8 @@ import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
+import VoiceTranslator from '@/components/VoiceTranslator';
+import ImageTranslator from '@/components/ImageTranslator';
 import AIDocumentAnalyzer from '@/components/AIDocumentAnalyzer';
 import Contact from '@/components/Contact';
 import Particles from '@/components/Particles';
@@ -35,13 +37,17 @@ export default function Home() {
           </div>
         </div>
         <div className="w-full flex flex-col items-center">
-          <div className="h-32"></div>
+          <div className="h-24"></div>
           <Services />
-          <div className="h-32"></div>
+          <div className="h-24"></div>
+          <VoiceTranslator />
+          <div className="h-24"></div>
+          <ImageTranslator />
+          <div className="h-24"></div>
           <AIDocumentAnalyzer />
-          <div className="h-32"></div>
+          <div className="h-24"></div>
           <Contact />
-          <div className="h-32"></div>
+          <div className="h-24"></div>
         </div>
       </div>
       

@@ -59,37 +59,25 @@ export default function AIDocumentAnalyzer() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-32 flex flex-col items-center"
+          style={{ marginBottom: '24px' }}
         >
-          <motion.h2
-            initial={{ scale: 0.9 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight tracking-[0.15em] sm:tracking-[0.2em] mb-20 text-white"
-            style={{ marginBottom: '8px' }}
-          >
+          <h2 className="text-4xl md:text-6xl font-extralight tracking-widest text-white mb-12" style={{ marginBottom: '12px' }}>
             AI ANALYSIS
-          </motion.h2>
+          </h2>
           <motion.div
             initial={{ width: 0, opacity: 0 }}
-            whileInView={{ width: 200, opacity: 1 }}
+            whileInView={{ width: 400, opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}
-            className="h-px bg-linear-to-r from-transparent via-[#C9A55A] to-transparent mb-24"
+            className="h-px bg-gradient-to-r from-transparent via-[#C9A55A] to-transparent mb-12"
+            style={{ marginBottom: '12px' }}
           />
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            viewport={{ once: true }}
-            className="text-gray-500 text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-2"
-            style={{ marginTop: '8px', marginBottom: '16px' }}
-          >
+          <p className="text-gray-400 tracking-wider uppercase mb-16" style={{ marginBottom: '0px' }}>
             Document Intelligence Powered by AI
-          </motion.p>
+          </p>
         </motion.div>
 
         <motion.div
@@ -97,11 +85,11 @@ export default function AIDocumentAnalyzer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="w-full"
+          className="w-full bg-[#0f0f0f]/50 backdrop-blur-sm border-2 border-[#C9A55A]/40 p-12 md:p-20 min-h-[600px] flex flex-col"
         >
           {/* Upload Area */}
           <motion.div
-            className="relative border border-[#C9A55A]/10 bg-[#0a0a0a] backdrop-blur-sm transition-all duration-500 hover:border-[#C9A55A]/60 overflow-hidden group cursor-pointer"
+            className="relative bg-transparent transition-all duration-500 overflow-hidden group cursor-pointer flex-1 flex items-center justify-center"
           >
             {/* Animated background */}
             <div className="absolute inset-0 bg-linear-to-br from-[#C9A55A]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -160,7 +148,7 @@ export default function AIDocumentAnalyzer() {
                   <motion.button
                     onClick={analyzeDocument}
                     disabled={analyzing}
-                    className="group relative px-12 py-5 sm:px-20 sm:py-7 md:px-24 md:py-8 bg-[#C9A55A] text-black text-base sm:text-lg md:text-xl font-bold tracking-[0.15em] sm:tracking-[0.2em] overflow-hidden hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 transition-all duration-300 min-w-[200px] sm:min-w-[240px] md:min-w-[280px] inline-flex items-center justify-center gap-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group relative px-12 py-5 sm:px-20 sm:py-7 md:px-24 md:py-8 bg-[#C9A55A] text-black text-base sm:text-lg md:text-xl font-bold tracking-[0.15em] sm:tracking-[0.2em] overflow-hidden hover:shadow-[0_0_40px_rgba(201,165,90,0.8)] hover:brightness-110 transition-all duration-300 min-w-[200px] sm:min-w-[240px] md:min-w-[280px] inline-flex items-center justify-center gap-4 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     <motion.span
                       className="absolute inset-0 bg-linear-to-r from-[#D4AF37] to-[#FFD700]"
@@ -194,7 +182,7 @@ export default function AIDocumentAnalyzer() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mt-24 border border-[#C9A55A]/20 bg-black/40 backdrop-blur-sm"
+              className="mt-24 border-2 border-[#C9A55A] bg-black/40 backdrop-blur-sm"
               style={{ padding: '12px 12px' }}
             >
               <h3 className="text-4xl font-light tracking-wider text-white mb-20">ANALYSIS RESULTS</h3>
