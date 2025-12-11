@@ -20,35 +20,33 @@ export default function Home() {
   return (
     <main className="relative w-full overflow-x-hidden bg-black">
       <Particles />
+      <Header />
       
-      <div className="relative z-10">
-        <Header />
+      {/* Hero Section with Globe Background */}
+      <div className="relative pt-24 min-h-screen">
+        {/* Globe - Background Layer */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+          <Globe key="main-globe" />
+        </div>
         
-        {/* Hero Section with Globe Background */}
-        <div className="relative pt-24 min-h-screen">
-          {/* Globe - Background Layer - Positioned above logo on mobile */}
-          <div className="absolute inset-0 md:inset-0 top-32 md:top-0 pointer-events-none z-0">
-            <Globe />
-          </div>
-          
-          {/* Hero Content - Foreground Layer */}
-          <div className="relative z-10">
-            <Hero />
-          </div>
+        {/* Hero Content - Foreground Layer */}
+        <div className="relative" style={{ zIndex: 10 }}>
+          <Hero />
         </div>
-        <div className="w-full flex flex-col items-center">
-          <div className="h-24"></div>
-          <Services />
-          <div className="h-24"></div>
-          <VoiceTranslator />
-          <div className="h-24"></div>
-          <ImageTranslator />
-          <div className="h-24"></div>
-          <AIDocumentAnalyzer />
-          <div className="h-24"></div>
-          <Contact />
-          <div className="h-24"></div>
-        </div>
+      </div>
+      
+      <div className="relative w-full flex flex-col items-center" style={{ zIndex: 10 }}>
+        <div className="h-24"></div>
+        <Services />
+        <div className="h-24"></div>
+        <VoiceTranslator />
+        <div className="h-24"></div>
+        <ImageTranslator />
+        <div className="h-24"></div>
+        <AIDocumentAnalyzer />
+        <div className="h-24"></div>
+        <Contact />
+        <div className="h-24"></div>
       </div>
       
       {/* Footer */}

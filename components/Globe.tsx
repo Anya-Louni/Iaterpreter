@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, Float, MeshDistortMaterial, Stars, Text } from '@react-three/drei';
 import * as THREE from 'three';
@@ -180,19 +180,24 @@ export default function Globe() {
           alpha: true
         }}
         dpr={[1, 2]}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+        }}
       >
-        <Stars radius={100} depth={50} count={3000} factor={3} saturation={0} fade speed={0.5} />
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[10, 10, 5]} intensity={0.8} />
-        <pointLight position={[-10, -10, -5]} intensity={0.5} color="#C9A55A" />
-        <spotLight
-          position={[0, 10, 0]}
-          angle={0.3}
-          penumbra={1}
-          intensity={0.5}
-          color="#C9A55A"
-        />
-        <Earth />
+        <Suspense fallback={null}>
+          <Stars radius={100} depth={50} count={3000} factor={3} saturation={0} fade speed={0.5} />
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[10, 10, 5]} intensity={0.8} />
+          <pointLight position={[-10, -10, -5]} intensity={0.5} color="#C9A55A" />
+          <spotLight
+            position={[0, 10, 0]}
+            angle={0.3}
+            penumbra={1}
+            intensity={0.5}
+            color="#C9A55A"
+          />
+          <Earth />
+        </Suspense>
       </Canvas>
     </div>
   );
