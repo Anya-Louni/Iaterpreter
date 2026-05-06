@@ -13,7 +13,7 @@ const services = [
   {
     number: '02',
     title: 'Document Analysis',
-    description: 'AI-powered scanning and keyword extraction',
+    description: 'Automated scanning and keyword extraction',
     icon: FileScan
   },
   {
@@ -62,7 +62,7 @@ export default function Services() {
             whileInView={{ width: 200, opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}
-            className="h-px bg-gradient-to-r from-transparent via-[#C9A55A] to-transparent mb-10"
+            className="h-px bg-linear-to-r from-transparent via-[#C9A55A] to-transparent mb-10"
             style={{ marginBottom: '12px' }}
           />
           <motion.p
@@ -91,7 +91,7 @@ export default function Services() {
                 }}
               >
                 {/* Permanent gradient from right */}
-                <div className="absolute inset-0 bg-gradient-to-l from-[#C9A55A]/40 via-[#C9A55A]/10 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-l from-[#C9A55A]/40 via-[#C9A55A]/10 to-transparent pointer-events-none" />
 
                 <div className="relative z-10">
                     <div className="flex items-start justify-between mb-12 sm:mb-20 md:mb-28">

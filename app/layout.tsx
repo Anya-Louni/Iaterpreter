@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IATERPRETER - AI-Powered Document Analyzer",
-  description: "Professional translation and interpretation services with AI-powered document analysis. Upload PDFs and images for instant keyword extraction, summaries, and key insights powered by AI.",
+  title: "IATERPRETER - Translation Platform",
+  description: "Professional translation and interpretation services with document analysis. Upload PDFs and images for instant keyword extraction, summaries, and key insights.",
 };
 
 export default function RootLayout({

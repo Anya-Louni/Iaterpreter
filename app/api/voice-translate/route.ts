@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { rateLimit, enforceMaxOutputTokens, maxFileBytes } from '../../../lib/server-utils';
 
 const LANGUAGE_NAMES: Record<string, string> = {
   fr: 'French',
@@ -15,15 +16,17 @@ const LANGUAGE_NAMES: Record<string, string> = {
 
 export async function POST(request: Request) {
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.MODEL_API_KEY;
     
     if (!apiKey) {
-      console.error('[Voice Translate API] GEMINI_API_KEY not configured');
+      console.error('[Voice Translate API] Model API key not configured');
       return NextResponse.json(
-        { error: 'AI service not configured. Please contact support.' },
+        { error: 'Service not configured. Please contact support.' },
         { status: 500 }
       );
     }
+
+    await rateLimit(request, 'voice-translate');
 
     const formData = await request.formData();
     const audioFile = formData.get('audio') as Blob;
@@ -37,18 +40,29 @@ export async function POST(request: Request) {
       );
     }
 
+    // enforce audio file size
+    const maxBytes = maxFileBytes(5 * 1024 * 1024);
+    try {
+      const asize = (audioFile as any).size || 0;
+      if (asize > maxBytes) {
+        return NextResponse.json({ error: `Audio too large. Max ${Math.round(maxBytes / 1024)} KB` }, { status: 400 });
+      }
+    } catch (e) {
+      // ignore
+    }
+
     const sourceLangName = LANGUAGE_NAMES[sourceLanguage] || 'French';
     const targetLangName = LANGUAGE_NAMES[targetLanguage] || 'English';
 
-    console.log(`[Voice Translate API] Processing audio: ${sourceLangName} → ${targetLangName}`);
+    console.log(`[Voice Translate] Processing audio: ${sourceLangName} → ${targetLangName}`);
     
-    // Initialize Gemini AI
     const genAI = new GoogleGenerativeAI(apiKey);
+    const modelName = process.env.MODEL_NAME || 'default-model';
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.5-flash',
+      model: modelName,
       generationConfig: {
         temperature: 0.3,
-        maxOutputTokens: 500,
+        maxOutputTokens: enforceMaxOutputTokens(512),
       },
     });
 
@@ -57,7 +71,7 @@ export async function POST(request: Request) {
     const audioBase64 = Buffer.from(audioBuffer).toString('base64');
     const mimeType = audioFile.type || 'audio/webm';
 
-    console.log(`[Voice Translate API] Transcribing ${sourceLangName} audio...`);
+    console.log(`[Voice Translate] Transcribing ${sourceLangName} audio...`);
 
     const transcriptionPrompt = `Transcribe this ${sourceLangName} audio. Output ONLY the transcribed text.`;
 
@@ -72,7 +86,7 @@ export async function POST(request: Request) {
     ]);
 
     const originalText = transcriptionResult.response.text().trim();
-    console.log(`[Voice Translate API] ${sourceLangName} transcription:`, originalText);
+    console.log(`[Voice Translate] ${sourceLangName} transcription:`, originalText);
 
     if (!originalText) {
       return NextResponse.json(
@@ -81,13 +95,13 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log(`[Voice Translate API] Translating to ${targetLangName}...`);
+    console.log(`[Voice Translate] Translating to ${targetLangName}...`);
     const translationPrompt = `Translate this ${sourceLangName} text to ${targetLangName}. Output ONLY the translation:\n\n"${originalText}"`;
 
     const translationResult = await model.generateContent(translationPrompt);
     const translatedText = translationResult.response.text().trim();
     
-    console.log(`[Voice Translate API] ${targetLangName} translation:`, translatedText);
+    console.log(`[Voice Translate] ${targetLangName} translation:`, translatedText);
 
     return NextResponse.json({
       originalText,
@@ -96,8 +110,11 @@ export async function POST(request: Request) {
       targetLanguage: targetLangName,
     });
 
-  } catch (error) {
-    console.error('[Voice Translate API] Error:', error);
+  } catch (error: any) {
+    if (error?.status === 429) {
+      return NextResponse.json({ error: 'Too many requests, please slow down.' }, { status: 429, headers: { 'Retry-After': String(error.retryAfter || 60) } });
+    }
+    console.error('[Voice Translate] Error:', error);
     return NextResponse.json(
       { 
         error: error instanceof Error ? error.message : 'Failed to process audio',

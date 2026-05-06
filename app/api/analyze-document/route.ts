@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { rateLimit, enforceMaxOutputTokens, maxFileBytes } from '../../../lib/server-utils';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('API route called');
-    console.log('API Key present:', !!process.env.GEMINI_API_KEY);
+    await rateLimit(request, 'analyze-document');
+
+    console.log('[Document Analysis] Request received');
+    console.log('[Document Analysis] Service key present:', !!process.env.MODEL_API_KEY);
     
     // Check if API key is configured
-    if (!process.env.GEMINI_API_KEY) {
-      console.error('GEMINI_API_KEY not found in environment variables');
+    if (!process.env.MODEL_API_KEY) {
+      console.error('MODEL_API_KEY not found in environment variables');
       return NextResponse.json(
-        { error: 'AI service not configured. Please contact support.' },
+        { error: 'Service not configured. Please contact support.' },
         { status: 500 }
       );
     }
@@ -26,12 +29,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('File received:', file.name, file.type, file.size);
+    console.log('[Document Analysis] File received:', file.name, file.type, file.size);
+
+    // Enforce file size
+    const maxBytes = maxFileBytes(10 * 1024 * 1024); // default 10MB
+    try {
+      const fsize = (file as any).size || 0;
+      if (fsize > maxBytes) {
+        return NextResponse.json({ error: `File too large. Max ${Math.round(maxBytes / 1024)} KB` }, { status: 400 });
+      }
+    } catch (e) {
+      // ignore
+    }
 
     // Check file type
     const fileType = file.type;
     if (!fileType.includes('pdf') && !fileType.includes('image')) {
-      console.log('Invalid file type:', fileType);
+      console.log('[Document Analysis] Invalid file type:', fileType);
       return NextResponse.json(
         { error: 'Only PDF and image files are supported' },
         { status: 400 }
@@ -43,15 +57,15 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
     const base64Data = buffer.toString('base64');
 
-    // Initialize Gemini
-    const apiKey = process.env.GEMINI_API_KEY;
+    // Initialize model client
+    const apiKey = process.env.MODEL_API_KEY;
     const genAI = new GoogleGenerativeAI(apiKey);
-    
+    const modelName = process.env.MODEL_NAME || 'default-model';
     const model = genAI.getGenerativeModel({ 
-      model: 'gemini-2.5-flash',
+      model: modelName,
       generationConfig: {
         temperature: 0.4,
-        maxOutputTokens: 1000,
+        maxOutputTokens: enforceMaxOutputTokens(512),
       }
     });
 
@@ -74,22 +88,22 @@ Format your response as JSON with this exact structure:
       },
     };
 
-    console.log('Calling Gemini API...');
+    console.log('[Document Analysis] Processing document...');
     const result = await model.generateContent([prompt, imagePart]);
     const response = result.response;
     const responseText = response.text();
     
-    console.log('Gemini response:', responseText);
+    console.log('[Document Analysis] Raw response:', responseText);
 
     // Parse JSON response
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.log('No JSON found in response');
-      throw new Error('Invalid response format from AI');
+      console.log('[Document Analysis] No JSON found in response');
+      throw new Error('Invalid response format from the service');
     }
 
     const analysis = JSON.parse(jsonMatch[0]);
-    console.log('Parsed analysis:', analysis);
+    console.log('[Document Analysis] Parsed analysis:', analysis);
 
     const responseData = {
       summary: analysis.summary || 'No summary available',
@@ -97,11 +111,14 @@ Format your response as JSON with this exact structure:
       keyInsights: analysis.keyInsights || [],
     };
     
-    console.log('Sending response:', responseData);
+    console.log('[Document Analysis] Sending response:', responseData);
 
     return NextResponse.json(responseData);
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.status === 429) {
+      return NextResponse.json({ error: 'Too many requests, please slow down.' }, { status: 429, headers: { 'Retry-After': String(error.retryAfter || 60) } });
+    }
     console.error('Error analyzing document:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to analyze document' },
@@ -109,9 +126,3 @@ Format your response as JSON with this exact structure:
     );
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};

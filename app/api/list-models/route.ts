@@ -1,20 +1,24 @@
 import { NextResponse } from 'next/server';
+import { rateLimit } from '../../../lib/server-utils';
 
 export async function GET() {
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
+    await rateLimit(new Request(''), 'list-models');
+    const apiKey = process.env.MODEL_API_KEY;
     
     if (!apiKey) {
-      return NextResponse.json(
-        { error: 'GEMINI_API_KEY not configured' },
-        { status: 500 }
-      );
+      // If no model key is configured, return an empty list rather than exposing provider details
+      return NextResponse.json({ models: [] });
     }
 
-    // Call the REST API directly to list models
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`
-    );
+    // If a provider base URL is configured, use it. Otherwise return empty list to avoid exposing vendor.
+    const base = process.env.MODEL_API_BASE;
+    if (!base) {
+      return NextResponse.json({ models: [] });
+    }
+
+    // Call the configured model provider to list models
+    const response = await fetch(`${base}/models?key=${apiKey}`);
     
     if (!response.ok) {
       const errorText = await response.text();

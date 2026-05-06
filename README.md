@@ -1,14 +1,14 @@
-# IATERPRETER - AI-Powered Translation Platform
+# IATERPRETER - Translation Platform
 
-A stunning, modern website for translation and interpretation services featuring a 3D interactive globe and multiple AI-powered translation tools with Google Gemini AI.
+A modern website for translation and interpretation services featuring a 3D interactive globe and multiple cloud-powered translation tools.
 
-## Features
+## Overview
 
 - **3D Interactive Globe**: Beautiful Three.js globe with rotating language indicators
 - **Voice Translator**: Record French audio → transcribe → translate to English → speak translation (with Web Speech API)
 - **Image Translator**: Capture/upload images → OCR text extraction → instant translation
-- **Expert Prompt Generator**: Generate field-specific expert translation prompts (Legal, Medical, Technical, Literary, etc.)
-- **AI Document Analysis**: Upload PDF and image files for instant keyword extraction, summarization, and key insights
+- **Expert Prompt Generator**: Generate field-specific translation prompts (Legal, Medical, Technical, Literary, etc.)
+- **Document Analysis**: Upload PDF and image files for keyword extraction, summarization, and key insights
 - **Modern UI/UX**: Elegant gold accents, smooth animations, and premium design
 - **Fully Responsive**: Optimized for all devices with mobile-first approach
 - **Premium Styling**: Sophisticated gold color scheme with luxury feel
@@ -36,47 +36,11 @@ npm run dev
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## AI Integration
+## Service integration
 
-The website uses **Google Gemini AI** for multiple translation and analysis features:
+This project integrates with external cloud translation and analysis services. To run the project you'll need to provide an API key for the provider you choose. Configure credentials using environment variables as described in `.env.example`.
 
-### Voice Translation
-- **Audio Transcription**: Gemini transcribes French audio to text
-- **Translation**: Automatic French to English translation
-- **Speech Synthesis**: Web Speech API speaks the English translation
-- **Real-time Processing**: Fast transcription and translation
-
-### Image Translation
-- **OCR Text Extraction**: Gemini Vision API extracts text from images
-- **Language Detection**: Automatically detects source language
-- **Translation**: Translates extracted text to English
-- **Camera Support**: Capture photos directly or upload images
-
-### Expert Prompt Generation
-- **Field-Specific Prompts**: Generate expert translation prompts for 8+ fields
-- **Customized Instructions**: Tailored prompts for Legal, Medical, Technical, Literary, Business, Scientific, Marketing, and Website localization
-- **AI-Optimized**: Gemini optimizes prompts for maximum translation quality
-
-### Document Analysis
-- **PDF Analysis**: Extract keywords, summary, and key insights from PDF documents
-- **Image Analysis**: Analyze images containing text or documents
-- **Comprehensive Results**: Organized output with summaries, keywords, and insights
-- **Real-time Processing**: Fast analysis using Gemini 2.5 Flash model
-
-### Setup Gemini API
-
-1. Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-
-2. Add to `.env.local`:
-```
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-3. For production deployment, add the environment variable in your hosting platform:
-   - **Vercel**: Settings → Environment Variables
-   - **Netlify**: Site configuration → Environment variables
-   - **Cloudflare Pages**: Settings → Environment Variables
-
+For local development copy `.env.example` to `.env.local` and add your provider key. In production set environment variables using your hosting provider's secret management.
 ## Customization
 
 - Colors: Edit gold color values in components (`#FFD700`)
@@ -90,7 +54,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 
 1. Push to GitHub
 2. Import project in Vercel
-3. Add environment variable: `GEMINI_API_KEY`
+3. Add environment variable: `MODEL_API_KEY`
 4. Deploy
 
 ```bash
@@ -100,13 +64,25 @@ vercel deploy
 
 ### Environment Variables Required
 
-- `GEMINI_API_KEY` - Your Google Gemini API key
+- `MODEL_API_KEY` - Your provider API key
+
+### Recommended environment variables and safe defaults
+
+For safety and cost control the server enforces conservative defaults. Copy `.env.example` to `.env.local` and set your key and any values you want to adjust.
+
+- `MAX_OUTPUT_TOKENS` (default 512) - Maximum tokens requested from the model per generation
+- `MAX_INPUT_CHARS` (default 20000) - Maximum input text length the server will accept
+- `MAX_FILE_BYTES` (default 10485760) - Maximum bytes for uploaded files
+- `RATE_LIMIT_WINDOW_MS` (default 60000) - Rate limit window in milliseconds
+- `RATE_LIMIT_MAX` (default 30) - Maximum requests per window per client
+
+Security note: In production, set environment variables using your hosting provider's secret management (Vercel, Netlify, Cloudflare Pages, etc.) and keep `.env.local` out of git.
 
 ## Project Structure
 
 ```
 ├── app/
-│   ├── api/analyze-document/  # Gemini AI integration
+│   ├── api/analyze-document/  # model integration
 │   ├── layout.tsx             # Root layout
 │   └── page.tsx               # Home page
 ├── components/
@@ -114,7 +90,7 @@ vercel deploy
 │   ├── Hero.tsx               # Landing section
 │   ├── Globe.tsx              # 3D rotating globe
 │   ├── Services.tsx           # Services section
-│   ├── AIDocumentAnalyzer.tsx # AI document upload and analysis
+│   ├── AIDocumentAnalyzer.tsx # document upload and analysis
 │   └── Contact.tsx            # Contact form
 └── public/                    # Static assets
 ```
